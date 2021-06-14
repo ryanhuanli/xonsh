@@ -5,17 +5,6 @@
 .eggs/
 .pytest_cache/
 __amalgam__.py
-lexer_table.py
-parser_table.py
-parser_test_table.py
-xonsh/lexer_table.py
-xonsh/parser_table.py
-xonsh/completion_parser_table.py
-xonsh/parsers/completion_parser_table.py
-tests/lexer_table.py
-tests/parser_table.py
-tests/lexer_test_table.py
-tests/parser_test_table.py
 tests/testfile
 build/
 dist/
