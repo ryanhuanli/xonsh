@@ -355,7 +355,7 @@ class CommandPipeline:
         stream = self.captured not in STDOUT_CAPTURE_KINDS
         if stream and not self.spec.stdout:
             stream = False
-        stdout_has_buffer = hasattr(sys.stdout, "buffer")
+        stdout_has_buffer = hasattr(sys.stdout, "buffer") and not sys.stdout.buffer.closed
         nl = b"\n"
         cr = b"\r"
         crnl = b"\r\n"

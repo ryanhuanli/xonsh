@@ -107,8 +107,8 @@ class _TeeStdBuf(io.RawIOBase):
             self.stdbuf.write(std_b)
         else:
             self.stdbuf.write(std_b.decode(encoding=self.encoding, errors=self.errors))
-        return self.membuf.write(b)
-
+        if not self.membuf.closed:
+            return self.membuf.write(b)
 
 class _TeeStd(io.TextIOBase):
     """Tees a std stream into an in-memory container and the original stream."""
@@ -180,7 +180,8 @@ class _TeeStd(io.TextIOBase):
 
     def write(self, s):
         """Writes data to the original std stream and the in-memory object."""
-        self.mem.write(s)
+        if not self.mem.closed:
+            self.mem.write(s)
         if self.std is None:
             return
         std_s = s
@@ -192,8 +193,8 @@ class _TeeStd(io.TextIOBase):
 
     def flush(self):
         """Flushes both the original stdout and the buffer."""
-        self.std.flush()
-        self.mem.flush()
+        if self.std is not None and not self.std.closed: self.std.flush()
+        if self.mem is not None and not self.mem.closed: self.mem.flush()
 
     def fileno(self):
         """Tunnel fileno() calls to the std stream."""
